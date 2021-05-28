@@ -3,7 +3,6 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace API_projTraining.Controllers
 {
@@ -27,6 +26,7 @@ namespace API_projTraining.Controllers
         public IEnumerable<WeatherForecast> Get()
         {
             var rng = new Random();
+            _logger.LogInformation("");
             return Enumerable.Range(1, 5).Select(index => new WeatherForecast
             {
                 Date = DateTime.Now.AddDays(index),
