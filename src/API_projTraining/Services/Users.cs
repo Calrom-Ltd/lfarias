@@ -7,12 +7,13 @@ namespace API_projTraining.Services
 {
     public class Users
     {
-        public DateTime Date { get; set; }
-
-        public int TemperatureC { get; set; }
-
-        public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
-
-        public string Summary { get; set; }
+        private string Emails { get; set; }
+        public string Password { get; set; }
+    }
+    public Users()
+    {
+        Email = "test@testmail.com";
+        Password = "abc123";
     }
 }
+
