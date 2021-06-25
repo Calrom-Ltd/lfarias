@@ -45,25 +45,5 @@ namespace API_projTraining.Controllers
                 return NotFound();
             }
         }
-
-        ////// POST api/<MessagesController>
-        //[HttpPost]
-        //public void PostMessage([FromBody] Messages msg)
-        //{
-
-
-        //}
-
-        //// PUT api/<MessagesController>/5
-        //[HttpPut("{id}")]
-        //public void Put(int id, [FromBody] string value)
-        //{
-        //}
-
-        //// DELETE api/<MessagesController>/5
-        //[HttpDelete("{id}")]
-        //public void Delete(int id)
-        //{
-        //}
     }
 }

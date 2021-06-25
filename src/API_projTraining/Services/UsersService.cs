@@ -12,8 +12,6 @@ namespace API_projTraining.Services
         public string[] firstName = { "Alfa", "Bravo", "Charlie", "Delta", "Eco", "Foxtrot", "Golf", "Hotel", "India", "Juliet" };
         public string[] lastName = { "Arantes", "Bezerra", "Castro", "Dias", "Elias", "Ferreira", "Gomes", "Herrera", "Inacio", "Junqueira" };
 
-        //public object Request { get; private set; }
-
         public User FindUser(int userId)
         {
             User myuser = new();
