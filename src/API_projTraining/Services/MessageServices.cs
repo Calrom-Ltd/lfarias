@@ -6,10 +6,10 @@ namespace API_projTraining.Services
     public class MessageServices
     {
 
-        public int[] msgId = { 11, 22, 33, 44, 55, 66, 77, 88, 99, 1010 };
-        public int[] userId = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
-        public string[] subject = { "alfa", "bravo", "charlie", "delta", "eco", "foxtrot", "golf", "hotel", "india", "juliet" };
-        public string[] body = { "alfa", "bravo", "charlie", "delta", "eco", "foxtrot", "golf", "hotel", "india", "juliet" };
+        private readonly int[] msgId = { 11, 22, 33, 44, 55, 66, 77, 88, 99, 1010 };
+        private readonly int[] userId = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
+        private readonly string[] subject = { "alfa", "bravo", "charlie", "delta", "eco", "foxtrot", "golf", "hotel", "india", "juliet" };
+        private readonly string[] body = { "alfa", "bravo", "charlie", "delta", "eco", "foxtrot", "golf", "hotel", "india", "juliet" };
         public Messages FindMessage(int messageId)
         {
             Messages mymessage = new();

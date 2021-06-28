@@ -5,12 +5,12 @@ namespace API_projTraining.Services
 {
     public class UserServices
     {
-        public int[] id = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
-        public string[] email = { "Alfa@testmail.com", "Bravo@testmail.com", "Charlie@testmail.com", "Delta@testmail.com", "Eco@testmail.com", "Foxtrot@testmail.com", "Golf@testmail.com", "Hotel@testmail.com", "India@testmail.com", "Juliet@testmail.com" };
-        public string[] password = { "Alf49874", "Br4v09874", "Ch4rl139874", "D3lt49874", "3C09874", "F0str0t9874", "G01f9874", "H0t319874", "1nd149874", "Jul13t9874" };
-        public long[] telephone = { 07788990000, 07744550000, 07755660000, 07711220000, 07722330000, 07733220000, 07722110000, 07766550000, 07755440000, 07799880000 };
-        public string[] firstName = { "Alfa", "Bravo", "Charlie", "Delta", "Eco", "Foxtrot", "Golf", "Hotel", "India", "Juliet" };
-        public string[] lastName = { "Arantes", "Bezerra", "Castro", "Dias", "Elias", "Ferreira", "Gomes", "Herrera", "Inacio", "Junqueira" };
+        private readonly int[] id = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
+        private readonly string[] email = { "Alfa@testmail.com", "Bravo@testmail.com", "Charlie@testmail.com", "Delta@testmail.com", "Eco@testmail.com", "Foxtrot@testmail.com", "Golf@testmail.com", "Hotel@testmail.com", "India@testmail.com", "Juliet@testmail.com" };
+        private readonly string[] password = { "Alf49874", "Br4v09874", "Ch4rl139874", "D3lt49874", "3C09874", "F0str0t9874", "G01f9874", "H0t319874", "1nd149874", "Jul13t9874" };
+        private readonly long[] telephone = { 07788990000, 07744550000, 07755660000, 07711220000, 07722330000, 07733220000, 07722110000, 07766550000, 07755440000, 07799880000 };
+        private readonly string[] firstName = { "Alfa", "Bravo", "Charlie", "Delta", "Eco", "Foxtrot", "Golf", "Hotel", "India", "Juliet" };
+        private readonly string[] lastName = { "Arantes", "Bezerra", "Castro", "Dias", "Elias", "Ferreira", "Gomes", "Herrera", "Inacio", "Junqueira" };
 
         public User FindUser(int userId)
         {
