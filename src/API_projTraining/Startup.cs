@@ -24,6 +24,7 @@ namespace API_projTraining
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "API_projTraining", Version = "v1" });
             });
+
         }
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -47,4 +48,5 @@ namespace API_projTraining
             }
         }
     }
+
 }

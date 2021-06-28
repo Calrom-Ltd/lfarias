@@ -1,9 +1,10 @@
 {
+  "$schema": "http://json.schemastore.org/launchsettings.json",
   "iisSettings": {
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
     "iisExpress": {
-      "applicationUrl": "http://localhost:64367/",
+      "applicationUrl": "http://localhost:64371/",
       "sslPort": 0
     }
   },
@@ -11,6 +12,7 @@
     "IIS Express": {
       "commandName": "IISExpress",
       "launchBrowser": true,
+      "launchUrl": "/swagger/api",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
@@ -18,10 +20,12 @@
     "API_projTraining": {
       "commandName": "Project",
       "launchBrowser": true,
+      "launchUrl": "swagger",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
-      },
-      "applicationUrl": "http://localhost:64371/"
+      }
     }
-  }
+  },
+  "applicationUrl": "https://localhost:5001;http://localhost5000"
+
 }
