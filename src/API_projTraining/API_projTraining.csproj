@@ -7,7 +7,6 @@
 
   <ItemGroup>
     <PackageReference Include="MaxMind.GeoIP2" Version="4.0.1" />
-    <PackageReference Include="Microsoft.AspNet.WebApi.Core" Version="5.2.7" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.1.4" />
     <PackageReference Include="System.Linq" Version="4.3.0" />
     <PackageReference Include="System.Runtime.Extensions" Version="4.3.1" />
