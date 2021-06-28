@@ -37,7 +37,7 @@ namespace API_projTraining.Controllers
         public ActionResult<List<User>> FindSomeUsers(int numberOfUsers)
         {
             UserServices myuserservices = new();
-            if (numberOfUsers > 0 & numberOfUsers < 11)
+            if (numberOfUsers > 0 && numberOfUsers < 11)
             {
                 return myuserservices.FindSomeUsers(numberOfUsers);
             }

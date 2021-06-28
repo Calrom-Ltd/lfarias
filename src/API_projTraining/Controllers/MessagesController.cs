@@ -14,7 +14,7 @@ namespace API_projTraining.Controllers
         public ActionResult<Messages> FindMessage(int mId)
         {
             MessageServices mymessages = new();
-            if (mId > 0 & mId < 11)
+            if (mId > 0 && mId < 11)
             {
                 return mymessages.FindMessage(mId);
             }
@@ -36,7 +36,7 @@ namespace API_projTraining.Controllers
         public ActionResult<List<Messages>> FindSomeMessages(int numberOfMessages)
         {
             MessageServices mymessageservices = new();
-            if (numberOfMessages > 0 & numberOfMessages < 11)
+            if (numberOfMessages > 0 && numberOfMessages < 11)
             {
                 return mymessageservices.FindSomeMessages(numberOfMessages);
             }
