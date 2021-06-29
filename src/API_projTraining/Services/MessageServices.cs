@@ -5,7 +5,6 @@ namespace API_projTraining.Services
 {
     public class MessageServices
     {
-
         private readonly int[] msgId = { 11, 22, 33, 44, 55, 66, 77, 88, 99, 1010 };
         private readonly int[] userId = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
         private readonly string[] subject = { "alfa", "bravo", "charlie", "delta", "eco", "foxtrot", "golf", "hotel", "india", "juliet" };
@@ -21,7 +20,7 @@ namespace API_projTraining.Services
                 mymessage.Subject = subject[i];
                 mymessage.Body = body[i];
             }
-            else if (messageId > 1 & messageId < 11)
+            else if (messageId is > 1 and < 11)
             {
                 int i = messageId - 1;
                 mymessage.MsgId = msgId[i];
@@ -48,7 +47,7 @@ namespace API_projTraining.Services
                 idx++;
                 count++;
             }
-            while (count >= 1 & count <= 10);
+            while (count is >= 1 and <= 10);
             return mymessages;
         }
 

@@ -11,7 +11,6 @@ namespace API_projTraining.Services
         private readonly long[] telephone = { 07788990000, 07744550000, 07755660000, 07711220000, 07722330000, 07733220000, 07722110000, 07766550000, 07755440000, 07799880000 };
         private readonly string[] firstName = { "Alfa", "Bravo", "Charlie", "Delta", "Eco", "Foxtrot", "Golf", "Hotel", "India", "Juliet" };
         private readonly string[] lastName = { "Arantes", "Bezerra", "Castro", "Dias", "Elias", "Ferreira", "Gomes", "Herrera", "Inacio", "Junqueira" };
-
         public User FindUser(int userId)
         {
             User myuser = new();
@@ -25,7 +24,7 @@ namespace API_projTraining.Services
                 myuser.FirstName = firstName[i];
                 myuser.LastName = lastName[i];
             }
-            else if (userId > 1 & userId < 11)
+            else if (userId > 1 && userId < 11)
             {
                 int i = userId - 1;
                 myuser.Id = id[i];
@@ -56,7 +55,7 @@ namespace API_projTraining.Services
                 idx++;
                 count++;
             }
-            while (count >= 1 & count <= 10);
+            while (count is >= 1 and <= 10);
             return myusers;
         }
 

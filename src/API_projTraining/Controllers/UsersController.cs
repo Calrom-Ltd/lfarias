@@ -15,7 +15,7 @@ namespace API_projTraining.Controllers
         public ActionResult<User> FindUser(int id)
         {
             UserServices myuserservices = new();
-            if (id > 0 & id < 11)
+            if (id > 0 && id < 11)
             {
                 return myuserservices.FindUser(id);
             }
