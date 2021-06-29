@@ -14,17 +14,7 @@ namespace API_projTraining.Services
         public User FindUser(int userId)
         {
             User myuser = new();
-            if (userId == 1)
-            {
-                int i = userId - 1;
-                myuser.Id = id[i];
-                myuser.Email = email[i];
-                myuser.Password = password[i];
-                myuser.Telephone = telephone[i];
-                myuser.FirstName = firstName[i];
-                myuser.LastName = lastName[i];
-            }
-            else if (userId > 1 && userId < 11)
+            if (userId > 0 && userId < 11)
             {
                 int i = userId - 1;
                 myuser.Id = id[i];

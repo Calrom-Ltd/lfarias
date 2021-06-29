@@ -12,15 +12,7 @@ namespace API_projTraining.Services
         public Messages FindMessage(int messageId)
         {
             Messages mymessage = new();
-            if (messageId == 1)
-            {
-                int i = messageId - 1;
-                mymessage.MsgId = msgId[i];
-                mymessage.UserId = userId[i];
-                mymessage.Subject = subject[i];
-                mymessage.Body = body[i];
-            }
-            else if (messageId is > 1 and < 11)
+            if (messageId is > 0 and < 11)
             {
                 int i = messageId - 1;
                 mymessage.MsgId = msgId[i];
