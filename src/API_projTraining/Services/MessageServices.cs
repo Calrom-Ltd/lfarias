@@ -1,65 +1,57 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using System.Linq;
+using System;
 
 namespace API_projTraining.Services
 {
-    public class MessageServices
+    public class MessageServices : Messages
     {
-        private readonly int[] msgId = { 11, 22, 33, 44, 55, 66, 77, 88, 99, 1010 };
-        private readonly int[] userId = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
-        private readonly string[] subject = { "alfa", "bravo", "charlie", "delta", "eco", "foxtrot", "golf", "hotel", "india", "juliet" };
-        private readonly string[] body = { "alfa", "bravo", "charlie", "delta", "eco", "foxtrot", "golf", "hotel", "india", "juliet" };
-        public Messages FindMessage(int messageId)
+
+        public UserServices userservices = new();
+
+        //public void GetAllUsers()
+        //{
+        //    List<User> calledListOfUsers = userservices.GetAllUsers();
+        //}
+
+        public readonly List<Messages> listOfMessages = new();
+
+        public MessageServices()
         {
-            Messages mymessage = new();
-            if (messageId is > 0 and < 11)
-            {
-                int i = messageId - 1;
-                mymessage.MsgId = msgId[i];
-                mymessage.UserId = userId[i];
-                mymessage.Subject = subject[i];
-                mymessage.Body = body[i];
-            }
-                return mymessage;
+            listOfMessages.Add(new Messages { UserNameId = 01, MsgId = 101, Subject = "FirstMessage", MessageBody = "FirstMessage" });
+            listOfMessages.Add(new Messages { UserNameId = 02, MsgId = 102, Subject = "SecondMessage", MessageBody = "SecondMessage" });
+            listOfMessages.Add(new Messages { UserNameId = 03, MsgId = 103, Subject = "ThirdMessage", MessageBody = "ThirdMessage" });
         }
 
-        public List<Messages> FindAllMessages()
+        public List<Messages> GetAllMessages()
         {
-            int count = 1;
-            int idx = 0;
-            var mymessages = new List<Messages>();
-            do
-            {
-                Messages mymessage = new();
-                mymessage.MsgId = msgId[idx];
-                mymessage.UserId = userId[idx];
-                mymessage.Subject = subject[idx];
-                mymessage.Body = body[idx];
-                mymessages.Add(mymessage);
-                idx++;
-                count++;
-            }
-            while (count is >= 1 and <= 10);
-            return mymessages;
+            return listOfMessages;
         }
 
-        public List<Messages> FindSomeMessages(int nOfMessages)
+        public List<Messages> GetMessageFromList(string email, string password, int messageuserid)
         {
-            var count = 1;
-            Random rnd = new();
-            var rndMsgs = new List<Messages>();
-            do
+            var inboxMessages = new List<Messages>();
+
+            object accountMessageDetailsEmail = null;
+            object accountMessageDetailsPassword = null;
+            object accountMessageDetailsUserId = null;
+
+            var accountDetails = userservices.GetAllUsers();
+
+
+            //accountMessageDetailsUserId = userservices.GetAllUsers().Find(z => z.UserId == messageuserid);
+
+            if(accountMessageDetailsUserId == listOfMessages.Find(p => p.UserNameId == messageuserid)) 
             {
-                int idx = rnd.Next(msgId.Length);
-                Messages mymessage = new();
-                mymessage.MsgId = msgId[idx];
-                mymessage.UserId = userId[idx];
-                mymessage.Subject = subject[idx];
-                mymessage.Body = body[idx];
-                rndMsgs.Add(mymessage);
-                count++;
-            } while (count <= nOfMessages);
-            return rndMsgs;
+                foreach (var messagecontent in listOfMessages)
+                {
+                    accountMessageDetailsEmail = userservices.GetAllUsers().Find(z => z.Email == email);
+                    accountMessageDetailsPassword = userservices.GetAllUsers().Find(z => z.Password == password);
+                    inboxMessages.Add(messagecontent);
+                }
+            }
+            return inboxMessages(messageuserid);
         }
     }
 }

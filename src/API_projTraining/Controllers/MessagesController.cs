@@ -8,41 +8,52 @@ namespace API_projTraining.Controllers
 {
     [ApiController]
     [Route("api/Messages")]
-    public class MessagesController : ControllerBase
+    public class MessagesController : Controller
     {
-        [HttpGet("OneMessage")]
-        public ActionResult<Messages> FindMessage(int mId)
+        public UserServices userservices = new();
+
+        public List<MessageServices> listOfMessages = new();
+
+        //public void GetAllMessages()
+        //{
+        //    List<Messages> calledListOfMessages = messageservices.GetAllMessages();
+        //}
+
+        [HttpPost("LoginForMessages")]
+        public ActionResult<MessageServices> GetMessageToList(string email, string password, int useridentificationformessages)
         {
-            MessageServices mymessages = new();
-            if (mId > 0 && mId < 11)
+            MessageServices messageServices = new();
+            object accountDetailsEmail = null;
+            object accountDetailsPassword = null;
+
+            if (email != null && password != null)
             {
-                return mymessages.FindMessage(mId);
+                accountDetailsEmail = userservices.GetAllUsers().Find(z => z.Email == email);
+                accountDetailsPassword = userservices.GetAllUsers().Find(z => z.Password == password);
+
+                if (accountDetailsEmail != null && accountDetailsPassword != null)
+                {
+                    var TotalNumberOfMessages = messageServices.listOfMessages.Count;
+
+                    if (useridentificationformessages <= TotalNumberOfMessages)
+                    {
+                        return Ok(messageServices.GetMessageFromList(email, password, useridentificationformessages));
+                    }
+                }
+
+                else if (accountDetailsEmail == null)
+                {
+                    NotFound("Incorrect email address. Please verify.");
+                }
+
+                else if (accountDetailsPassword == null)
+                {
+                    NotFound("Incorrect password. Please verify.");
+                }
             }
             else
             {
-                return NotFound();
-            }
-        }
-
-        [HttpGet("AllMessages")]
-        public List<Messages> FindAllMessages()
-        {
-            MessageServices mymessageservices = new();
-            return mymessageservices.FindAllMessages();
-        }
-
-        [HttpGet("SomeMessages")]
-        //need to sort a way to fetch and return random users from the array
-        public ActionResult<List<Messages>> FindSomeMessages(int numberOfMessages)
-        {
-            MessageServices mymessageservices = new();
-            if (numberOfMessages > 0 && numberOfMessages < 11)
-            {
-                return mymessageservices.FindSomeMessages(numberOfMessages);
-            }
-            else
-            {
-                return NotFound();
+                return NotFound("Email or password incorrect. Please verify.");
             }
         }
     }
