@@ -21,9 +21,20 @@ namespace API_projTraining.Services
             return listOfUsers;
         }
 
-        public ActionResult<User> GetUserById(int id)
+        public User GetUserById(int id)
         {
             return listOfUsers.FirstOrDefault(z => z.UserId == id);
         }
+
+        public User GetUserEmail(string email)
+        {
+            return listOfUsers.SingleOrDefault(y => y.Email == email);
+        }
+
+        public User GetUserPassword(string password)
+        {
+            return listOfUsers.SingleOrDefault(w => w.Password == password);
+        }
     }
+
 }

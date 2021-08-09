@@ -7,13 +7,7 @@ namespace API_projTraining.Services
 {
     public class MessageServices : Messages
     {
-
         public UserServices userservices = new();
-
-        //public void GetAllUsers()
-        //{
-        //    List<User> calledListOfUsers = userservices.GetAllUsers();
-        //}
 
         public readonly List<Messages> listOfMessages = new();
 
@@ -29,29 +23,19 @@ namespace API_projTraining.Services
             return listOfMessages;
         }
 
-        public List<Messages> GetMessageFromList(string email, string password, int messageuserid)
+        //public List<Messages> GetMessagesFromTheList(string email, string password, int messageuserid)
+        public List<Messages> GetMessagesFromTheList(string password)
         {
             var inboxMessages = new List<Messages>();
 
-            object accountMessageDetailsEmail = null;
-            object accountMessageDetailsPassword = null;
-            object accountMessageDetailsUserId = null;
+            //need fixing
+            var listForInboxMessages = listOfMessages.Where(p => p.UserNameId == password);
 
-            var accountDetails = userservices.GetAllUsers();
-
-
-            //accountMessageDetailsUserId = userservices.GetAllUsers().Find(z => z.UserId == messageuserid);
-
-            if(accountMessageDetailsUserId == listOfMessages.Find(p => p.UserNameId == messageuserid)) 
+            foreach (var messagecontent in listForInboxMessages)
             {
-                foreach (var messagecontent in listOfMessages)
-                {
-                    accountMessageDetailsEmail = userservices.GetAllUsers().Find(z => z.Email == email);
-                    accountMessageDetailsPassword = userservices.GetAllUsers().Find(z => z.Password == password);
-                    inboxMessages.Add(messagecontent);
-                }
+                inboxMessages.Add(messagecontent);
             }
-            return inboxMessages(messageuserid);
+            return inboxMessages;
         }
     }
 }

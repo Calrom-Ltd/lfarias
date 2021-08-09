@@ -14,41 +14,27 @@ namespace API_projTraining.Controllers
 
         public List<MessageServices> listOfMessages = new();
 
-        //public void GetAllMessages()
-        //{
-        //    List<Messages> calledListOfMessages = messageservices.GetAllMessages();
-        //}
-
         [HttpPost("LoginForMessages")]
-        public ActionResult<MessageServices> GetMessageToList(string email, string password, int useridentificationformessages)
+
+        //need fixing
+        public ActionResult<MessageServices> GetLoginDetailsAndMessage(string email, string password)
         {
             MessageServices messageServices = new();
-            object accountDetailsEmail = null;
-            object accountDetailsPassword = null;
 
-            if (email != null && password != null)
+            var accountDetailsEmail = userservices.GetUserEmail(email);
+            var accountDetailsPassword = userservices.GetUserPassword(password);
+
+            //need fixing
+            //var accountDetailsUserId = userservices.GetUserById(password);
+
+            var messagesFromUserInbox = messageServices.GetMessagesFromTheList(password);
+
+            if (accountDetailsEmail != null && accountDetailsPassword != null)
             {
-                accountDetailsEmail = userservices.GetAllUsers().Find(z => z.Email == email);
-                accountDetailsPassword = userservices.GetAllUsers().Find(z => z.Password == password);
 
-                if (accountDetailsEmail != null && accountDetailsPassword != null)
+                if (messagesFromUserInbox != null)
                 {
-                    var TotalNumberOfMessages = messageServices.listOfMessages.Count;
-
-                    if (useridentificationformessages <= TotalNumberOfMessages)
-                    {
-                        return Ok(messageServices.GetMessageFromList(email, password, useridentificationformessages));
-                    }
-                }
-
-                else if (accountDetailsEmail == null)
-                {
-                    NotFound("Incorrect email address. Please verify.");
-                }
-
-                else if (accountDetailsPassword == null)
-                {
-                    NotFound("Incorrect password. Please verify.");
+                    return Ok(messageServices.GetMessagesFromTheList(password));
                 }
             }
             else

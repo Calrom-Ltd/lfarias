@@ -1,5 +1,6 @@
 using API_projTraining.Services;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Linq;
 
 namespace APIprojTraining_UnitTests
 {
@@ -23,15 +24,15 @@ namespace APIprojTraining_UnitTests
         {
             //Arrange
             var userservices = new UserServices();
+            int numberOfElements = userservices.listOfUsers.Count;
 
-            var numberOfElements = userservices.listOfUsers.Count;
             //Act
-            if (id == numberOfElements)
+            if (id <= numberOfElements)
             {
-                searchedUser = userservices.GetUserById(id);
+                searchedUser = userservices.listOfUsers.FirstOrDefault(z => z.UserId == id);
             }
             //Assert
-            Assert.AreEqual(searchedUser, id);
+            Assert.IsNotNull(searchedUser);
         }
     }
 }
