@@ -1,10 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace API_projTraining.Services
 {
     public class User
     {
+        //primary key
         [Required]
         public int UserId { get; set; }
 

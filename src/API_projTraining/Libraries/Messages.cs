@@ -4,9 +4,11 @@ namespace API_projTraining.Services
 {
     public class Messages
     {
+        public User user = new();
+
         //Foreign Key
         [Required]
-        public int UserNameId { get; set; }
+        public User UserId { get; set; }
         
         //Primary key
         [Required]

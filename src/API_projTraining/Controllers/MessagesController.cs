@@ -24,13 +24,9 @@ namespace API_projTraining.Controllers
             var accountDetailsEmail = userservices.GetUserEmail(email);
             var accountDetailsPassword = userservices.GetUserPassword(password);
 
-            //need fixing
-            //var accountDetailsUserId = userservices.GetUserById(password);
-
-            var messagesFromUserInbox = messageServices.GetMessagesFromTheList(password);
-
             if (accountDetailsEmail != null && accountDetailsPassword != null)
             {
+                object messagesFromUserInbox = messageServices.GetMessagesFromTheList(password);
 
                 if (messagesFromUserInbox != null)
                 {
