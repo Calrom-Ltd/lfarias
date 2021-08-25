@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace API_projTraining.Services
@@ -25,5 +24,9 @@ namespace API_projTraining.Services
         [Required]
         [MaxLength(50, ErrorMessage = "Required last name")]
         public string LastName { get; set; }
+
+        public List<UserServices> listOfUsers = new();
+
+        public List<Message> Messages { get; set; }
     }
 }

@@ -1,5 +1,7 @@
+using API_projTraining.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -9,9 +11,12 @@ namespace API_projTraining
 {
     public class Startup
     {
+        public string ConnectionString { get; set; }
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
+            ConnectionString = Configuration.GetConnectionString("DefaultConnectionString");
         }
 
         public IConfiguration Configuration { get; }
@@ -20,6 +25,10 @@ namespace API_projTraining
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+
+            //configure DBContext with SQL
+            services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(ConnectionString));
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "API_projTraining", Version = "v1" });

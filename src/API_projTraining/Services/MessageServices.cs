@@ -1,32 +1,25 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System;
 
 namespace API_projTraining.Services
 {
-    public class MessageServices : Messages
+    public class MessageServices : Message
     {
-        public readonly List<Messages> listOfMessages = new();
-
-        public MessageServices()
+        public ApplicationDbContext _context;
+        public MessageServices(ApplicationDbContext applicationDbContext)
         {
-            listOfMessages.Add(new Messages { MsgId = 101, Subject = "FirstMessage", MessageBody = "FirstMessage" });
-            listOfMessages.Add(new Messages { MsgId = 102, Subject = "SecondMessage", MessageBody = "SecondMessage" });
-            listOfMessages.Add(new Messages { MsgId = 103, Subject = "ThirdMessage", MessageBody = "ThirdMessage" });
+            _context = applicationDbContext;
         }
 
-        public List<Messages> GetAllMessages()
-        {
-            return listOfMessages;
-        }
+        public List<Message> GetAllMessages() =>
+            _context.Messages.ToList();
 
-        public List<Messages> GetMessagesFromTheList(string password)
+        public List<Message> GetMessagesFromTheList(string email)
         {
-            var inboxMessages = new List<Messages>();
 
-            //need fixing
-            var listForInboxMessages = listOfMessages.Where(p => p.UserId.Password == password);
+            var inboxMessages = new List<Message>();
+
+            var listForInboxMessages = _context.Messages.Where(p => p.UserId.Email == email);
 
             foreach (var messagecontent in listForInboxMessages)
             {

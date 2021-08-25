@@ -1,40 +1,26 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 
 namespace API_projTraining.Services
 {
     public class UserServices : User
     {
-        public List<User> listOfUsers = new();
-
-        public UserServices()
+        public ApplicationDbContext _context;
+        public UserServices(ApplicationDbContext context)
         {
-            listOfUsers.Add(new User { UserId = 01, Email = "Alfa@testemail.com", Password = "Alf49874", FirstName = "Alfa", LastName = "Arantes" });
-            listOfUsers.Add(new User { UserId = 02, Email = "Bravo@testmail.com", Password = "Br4v09874", FirstName = "Bravo", LastName = "Bezerra" });
-            listOfUsers.Add(new User { UserId = 03, Email = "Charlie@testemail.com", Password = "Ch4rl139874", FirstName = "Charlie", LastName = "Castro" });
+            _context = context;
         }
 
-        public List<User> GetAllUsers()
-        {
-            return listOfUsers;
-        }
+        public List<User> GetAllUsers() =>
+             _context.Users.ToList();
 
-        public User GetUserById(int id)
-        {
-            return listOfUsers.FirstOrDefault(z => z.UserId == id);
-        }
+        public User GetUserById(int id) =>
+            _context.Users.FirstOrDefault(z => z.UserId == id);
 
-        public User GetUserEmail(string email)
-        {
-            return listOfUsers.SingleOrDefault(y => y.Email == email);
-        }
+        public User GetUserEmail(string email) =>
+            _context.Users.SingleOrDefault(y => y.Email == email);
 
-        public User GetUserPassword(string password)
-        {
-            return listOfUsers.SingleOrDefault(w => w.Password == password);
-        }
+        public User GetUserPassword(string password) =>
+            _context.Users.SingleOrDefault(w => w.Password == password);
     }
-
 }
