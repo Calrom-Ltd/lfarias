@@ -1,3 +1,4 @@
+using API_projTraining.Libraries;
 using API_projTraining.Services;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -7,27 +8,13 @@ namespace APIprojTraining_UnitTests
     [TestClass]
     public class UserServices_Tests
     {
-        public UserServices _userServices;
-        //private ApplicationDbContext _context;
-
-        //[TestInitialize]
-        //public void TestInit(ApplicationDbContext context)
-        //{
-        //    _context = context;
-        //}
-
-        public UserServices_Tests(UserServices userServices)
-        {
-            _userServices = userServices;
-        }
-
         [TestMethod]
         public void GetAllUsers_UsersList_ListIsNotNull()
         {
             //Arrange
-            //var userservices = new User();
+            var userservices = new UserServices();
             //Act
-            var listOfUsers = _userServices.GetAllUsers();
+            var listOfUsers = userservices.GetAllUsers();
             //Assert
             Assert.IsNotNull(listOfUsers);
         }
@@ -36,27 +23,41 @@ namespace APIprojTraining_UnitTests
         [DataRow(1)]
         public void GetUserById_ReturnOk_UserExist(int id)
         {
-            //var userservices = new UserServices(_context);
-            var user = _userServices.GetUserById(id);
+            var userservices = new UserServices();
+            var user = userservices.GetUserById(id);
             Assert.IsNotNull(user);
         }
 
         [TestMethod]
-        [DataRow("test@email.com")]
+        [DataRow("Alfa@testemail.com")]
         public void GetUserEmail_ReturnOk_EmailExist(string email)
         {
-            //var userservices = new UserServices(_context);
-            var userEmail = _userServices.GetUserEmail(email);
+            var userservices = new UserServices();
+            var userEmail = userservices.GetUserEmail(email);
             Assert.IsNotNull(userEmail);
         }
 
         [TestMethod]
-        [DataRow("P4ssw0rdT3st")]
+        [DataRow("Alf49874")]
         public void GetUserPassword_ReturnOk_PasswordMatches(string password)
         {
-            //var userservices = new UserServices(_context);
-            var userPassword = _userServices.GetUserPassword(password);
+            var userservices = new UserServices();
+            var userPassword = userservices.GetUserPassword(password);
             Assert.IsNotNull(userPassword);
         }
+
+        //[TestMethod]
+        //[DataRow("Alfa@testemail.com", "Alf49874", 01)]
+        //public void GetUserLogin_ReturnOk_EmailAndPasswordAreOk(string email, string password)
+        //{
+        //    var userservices = new UserServices();
+
+        //    var userLogin = userservices.GetUserLogin(email, password) =>
+        //        u => u.Userid == userservices.GetUserById(email));
+ 
+
+        //    Assert.IsTrue(userLogin.UserId == 01);
+
+        //}
     }
 }

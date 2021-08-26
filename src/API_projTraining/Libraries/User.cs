@@ -1,7 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Threading.Tasks;
 
-namespace API_projTraining.Services
+namespace API_projTraining.Libraries
 {
     public class User
     {
@@ -10,7 +13,7 @@ namespace API_projTraining.Services
         public int UserId { get; set; }
 
         [Required(ErrorMessage = "Required Email")]
-        [MaxLength (100)]
+        [MaxLength(100)]
         public string Email { get; set; }
 
         [Required]
@@ -25,8 +28,7 @@ namespace API_projTraining.Services
         [MaxLength(50, ErrorMessage = "Required last name")]
         public string LastName { get; set; }
 
-        public List<UserServices> listOfUsers = new();
-
         public List<Message> Messages { get; set; }
+        public Message Message { get; set; }
     }
 }

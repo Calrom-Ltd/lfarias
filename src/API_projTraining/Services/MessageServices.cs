@@ -1,31 +1,44 @@
-﻿using System.Collections.Generic;
+﻿using API_projTraining.Libraries;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace API_projTraining.Services
 {
-    public class MessageServices : Message
+    public class MessageServices
     {
-        public ApplicationDbContext _context;
-        public MessageServices(ApplicationDbContext applicationDbContext)
+        public List<Message> listOfMessages = new();
+        public MessageServices()
+        {            
+            listOfMessages.Add(new Message { MessageId = 101, MessageTitle = "FirstMessage", MessageBody = "FirstMessage" });
+            listOfMessages.Add(new Message { MessageId = 102, MessageTitle = "SecondMessage", MessageBody = "SecondMessage" });
+            listOfMessages.Add(new Message { MessageId = 103, MessageTitle = "ThirdMessage", MessageBody = "ThirdMessage" });
+        }
+    
+
+        public List<Message> GetAllMessages()
         {
-            _context = applicationDbContext;
+            return listOfMessages;
         }
 
-        public List<Message> GetAllMessages() =>
-            _context.Messages.ToList();
+        //public List<Message> GetListOfMessagesForOneUser(string email)
+        //{
+        //    var inboxMessages = new List<Message>();
 
-        public List<Message> GetMessagesFromTheList(string email)
-        {
-
-            var inboxMessages = new List<Message>();
-
-            var listForInboxMessages = _context.Messages.Where(p => p.UserId.Email == email);
-
-            foreach (var messagecontent in listForInboxMessages)
-            {
-                inboxMessages.Add(messagecontent);
-            }
-            return inboxMessages;
-        }
+        //    //var listForInboxMessages = new List<Message>();
+        //    inboxMessages = listOfMessages.Where(p => p.UserId.Email == email);
+           
+        //    foreach (var messagecontent in inboxMessages)
+        //    {
+        //        inboxMessages.Add(messagecontent);
+        //    }
+        //    if (inboxMessages == null)
+        //    {
+        //        return null;
+        //    }
+        //    else
+        //    {
+        //        return inboxMessages;
+        //    }
+        //}
     }
 }
