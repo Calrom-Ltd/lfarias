@@ -4,8 +4,7 @@ namespace API_projTraining.Libraries
 {
     public class Message
     {
-        //Primary key
-        [Required]
+        //[Required]
         public int MessageId { get; set; }
 
         [Required]
@@ -14,9 +13,12 @@ namespace API_projTraining.Libraries
         [Required]
         public string MessageBody { get; set; }
 
-        //Foreign Key / Navigation properties
-        [Required]
-        public User UserId { get;  set; }
-        public User User { get; set; }
+        [Required(ErrorMessage = "Required Email")]
+        [MaxLength(100)]
+        public string SenderEmail { get; set; }
+
+        [Required(ErrorMessage = "Required Email")]
+        [MaxLength(100)]
+        public string ReceiverEmail { get; set; }
     }
 }
