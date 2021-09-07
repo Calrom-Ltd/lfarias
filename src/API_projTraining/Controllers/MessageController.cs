@@ -32,6 +32,7 @@ namespace API_projTraining.Controllers
             }
         }
 
+        //unit test needs reviewing
         [HttpDelete("DeleteMessages")]
         public ActionResult DeleteMessages(string email, string password)
         {

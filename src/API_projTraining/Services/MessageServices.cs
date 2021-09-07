@@ -32,9 +32,12 @@ namespace API_projTraining.Services
 
             return inbox;
         }
+        
+        //unti test needs reviewing
         public void DeleteMessages(string email)
         {
-            var messages = listOfMessages.Where(p => p.ReceiverEmail == email).ToList();
+            var messages = new List<Message>();
+            messages = listOfMessages.FindAll(p => p.ReceiverEmail == email).ToList();
             messages.Clear();
         }
 
