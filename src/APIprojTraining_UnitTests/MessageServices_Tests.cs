@@ -2,71 +2,80 @@
 using API_projTraining.Services;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
+using Moq;
 
 namespace APIprojTraining_UnitTests
 {
     [TestClass]
     public class MessageServices_Tests
     {
-        private readonly MessageServices messageServices;
+        //private readonly MessageServices _messageServices;
 
-        private List<Message> ListOfMessages { get; set; }
+        //private List<Message> ListOfMessages { get; set; }
 
-        public MessageServices_Tests()
-        {
-            messageServices = new MessageServices();
-            ListOfMessages = new List<Message>();
-        }
+        //public MessageServices_Tests()
+        //{
+        //    _messageServices = new MessageServices();
+        //    ListOfMessages = new List<Message>();
+        //}
 
-        //---------Passing tests---------//
+        //---------------------------PASSING TESTS---------------------------//
+
         [TestMethod]
-        public void GetAllMessages_ReturnOk_ListIsNotNull()
+        public void GetAllMessages_ReturnListOfMessages_ListIsNotNull()
         {
-            var listOfMessagesTest = messageServices.listOfMessages;
-            Assert.IsNotNull(listOfMessagesTest);
+            // ARANGE
+            var moq_ListOfMessages = new List<Message>
+            {
+                new Message{ MessageId = 101, MessageBody = "This is Message number one"},
+                new Message{ MessageId = 102, MessageBody = "This is Message number two"},
+                new Message{ MessageId = 103, MessageBody = "This is Message number three"},
+            };
+
+            var messageService = new Mock<IMessageServices>();
+            messageService.Setup(x => x.GetAllMessages()).Returns(moq_ListOfMessages);
+
+            //// ACT
+            var actualResult = messageService.Object.GetAllMessages();
+
+            //// ASSERT
+            Assert.IsNotNull(actualResult);
         }
 
         [TestMethod]
         [DataRow ("Alfa@testemail.com")]
         public void GetListOfMessagesForOneUser_ReturnOk_ListIsNotNull(string email)
         {
-            var listWithMessages = messageServices.listOfMessages.FindAll(p => p.ReceiverEmail == email);
-            Assert.IsNotNull(listWithMessages);
-        }
-
-
-        //***Not sure this is acceptable
-        [TestMethod]
-        public void AddMessage_ReturnOk_MessageListIsNotNull()
-        {
-            var _message = new Message()
+            // ARANGE
+            var moq_ListOfMessages = new List<Message>
             {
-                //***passing the values to the object that will be added to the list***
-                //MessageTitle = message.MessageTitle,
-                //MessageBody = message.MessageBody,
-                //SenderEmail = message.SenderEmail,
-                //ReceiverEmail = message.ReceiverEmail
-
-                MessageTitle = "Title",
-                MessageBody = "Message content",
-                SenderEmail = "Sender@testemail.com",
-                ReceiverEmail = "Alfa@testemail.com"
+                new Message{ MessageId = 101, MessageBody = "This is Message number one", ReceiverEmail = "Alfa@testemail.com"},
+                new Message{ MessageId = 102, MessageBody = "This is Message number two", ReceiverEmail = "Bravo@testemail.com"},
+                new Message{ MessageId = 103, MessageBody = "This is Message number three", ReceiverEmail = "Charlie@testemail.com"},
             };
-            ListOfMessages.Add(_message);
 
-            Assert.IsTrue(ListOfMessages.Contains(_message));
+            var messageService = new Mock<IMessageServices>();
+
+            messageService.Setup(x => x.GetListOfMessagesForOneUser(email)).Returns(moq_ListOfMessages);
+
+            //// ACT
+            var inbox = messageService.Object.GetListOfMessagesForOneUser(email);
+
+            //// ASSERT
+            Assert.IsNotNull(inbox);
         }
 
+        [TestMethod]
+        public void AddMessageToList_MessageIscreatedAndAdded_MessageIsInTheList()
+        {
 
-        //***needs fixing
-        //[TestMethod]
-        //[DataRow("Alfa@testemail.com")]
-        //public void DeleteMessages_ReturnOk_ListIsNull(string email)
-        //{
-        //    var listWithMessages = messageServices.listOfMessages.FindAll(p => p.ReceiverEmail == email).ToList();
+        }
 
-        //    listWithMessages.Clear();
-        //    Assert.IsNull(listWithMessages);
-        //}
+        [TestMethod]
+        [DataRow("Alfa@testemail.com")]
+        public void DeleteMessages_ReturnOk_ListIsNull(string email)
+        {
+
+        }
     }
 }

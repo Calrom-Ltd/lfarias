@@ -2,7 +2,7 @@
 
 namespace API_projTraining.Libraries
 {
-    public class Message
+    public class Message : IMessage
     {
         //[Required]
         public int MessageId { get; set; }

@@ -10,7 +10,12 @@ namespace API_projTraining.Controllers
     [Route("api/User")]
     public class UserController : ControllerBase
     {
-        public UserServices _userservices = new();
+        public IUserServices _userservices = new UserServices();
+
+        public UserController(IUserServices userServices)
+        {
+            _userservices = userServices;
+        }
 
         [HttpGet("UsersList")]
         public ActionResult GetAllUsers()
@@ -18,10 +23,10 @@ namespace API_projTraining.Controllers
             return Ok(_userservices.GetAllUsers());
         }
 
-        [HttpGet("get-user-by-email")]
-        public ActionResult GetUserEmail(string email)
+        [HttpGet("GetUserByEmail")]
+        public ActionResult GetUserByEmail(string email)
         {
-            return Ok(_userservices.GetUserEmail(email));
+            return Ok(_userservices.GetUserByEmail(email));
         }
 
         [HttpPost("Login")]

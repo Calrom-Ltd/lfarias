@@ -4,9 +4,10 @@ using System.Linq;
 
 namespace API_projTraining.Services
 {
-    public class UserServices
+    public class UserServices : IUserServices
     {
         public List<User> listOfUsers = new();
+
         public UserServices()
         {
             listOfUsers.Add(new User { UserId = 01, Email = "Alfa@testemail.com", Password = "Alf49874", FirstName = "Alfa", LastName = "Arantes" });
@@ -23,12 +24,12 @@ namespace API_projTraining.Services
             return listOfUsers.FirstOrDefault(i => i.UserId == id);
         }
 
-        public User GetUserEmail(string email)
+        public User GetUserByEmail(string email)
         {
             return listOfUsers.FirstOrDefault(e => e.Email == email);
         }
 
-        public User GetUserPassword(string password)
+        public User GetUserByPassword(string password)
         {
             return listOfUsers.FirstOrDefault(p => p.Password == password);
         }

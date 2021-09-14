@@ -1,3 +1,4 @@
+using API_projTraining.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -20,6 +21,12 @@ namespace API_projTraining
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+
+            // This is actioning whenever IUserServices/IMessageServices is required, create UserServices/MessageServices
+            // and pass that in.
+            services.AddTransient<IUserServices, UserServices>();
+            services.AddTransient<IMessageServices, MessageServices>();
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "API_projTraining", Version = "v1" });

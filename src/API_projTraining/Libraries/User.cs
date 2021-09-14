@@ -2,7 +2,7 @@
 
 namespace API_projTraining.Libraries
 {
-    public class User
+    public class User : IUser
     {
         //primary key
         [Required]

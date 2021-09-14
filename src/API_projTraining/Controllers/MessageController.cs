@@ -8,8 +8,14 @@ namespace API_projTraining.Controllers
     [Route("api/Messages")]
     public class MessageController : ControllerBase
     {
-        public MessageServices _messageServices = new();
-        public UserServices _userServices = new();
+        public IUserServices _userServices;
+        public IMessageServices _messageServices;
+
+        public MessageController(IMessageServices messageServices, IUserServices userServices)
+        {
+            _messageServices = messageServices;
+            _userServices = userServices;
+        }
 
         [HttpGet("ListMessages")]
         public ActionResult<MessageServices> GetAllMessages()
@@ -49,10 +55,10 @@ namespace API_projTraining.Controllers
             }
         }
 
-        [HttpPost("AddMessage")]
+        [HttpPost("AddMessageToList")]
         public ActionResult<MessageServices> AddMessage([FromBody] Message message)
         {
-            _messageServices.AddMessage(message);
+            _messageServices.AddMessageToList(message);
             return Ok("Messages added to the list.");
         }
     }
