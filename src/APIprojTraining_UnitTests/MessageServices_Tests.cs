@@ -9,73 +9,107 @@ namespace APIprojTraining_UnitTests
     [TestClass]
     public class MessageServices_Tests
     {
-        //private readonly MessageServices _messageServices;
-
-        //private List<Message> ListOfMessages { get; set; }
-
-        //public MessageServices_Tests()
-        //{
-        //    _messageServices = new MessageServices();
-        //    ListOfMessages = new List<Message>();
-        //}
+        public MessageServices _messageServices;
+        public MessageServices_Tests()
+        {
+            _messageServices = new MessageServices();
+        }
 
         //---------------------------PASSING TESTS---------------------------//
 
         [TestMethod]
         public void GetAllMessages_ReturnListOfMessages_ListIsNotNull()
         {
-            // ARANGE
-            var moq_ListOfMessages = new List<Message>
+            // ARRANGE
+            var messageServices = new Mock<IMessageServices>();
+            
+            var mockListOfMessages = new List<Message>
             {
                 new Message{ MessageId = 101, MessageBody = "This is Message number one"},
                 new Message{ MessageId = 102, MessageBody = "This is Message number two"},
                 new Message{ MessageId = 103, MessageBody = "This is Message number three"},
             };
 
-            var messageService = new Mock<IMessageServices>();
-            messageService.Setup(x => x.GetAllMessages()).Returns(moq_ListOfMessages);
+            messageServices.Setup(x => x.GetAllMessages()).Returns(mockListOfMessages);
 
             //// ACT
-            var actualResult = messageService.Object.GetAllMessages();
+            var actualResult = messageServices.Object.GetAllMessages();
 
             //// ASSERT
-            Assert.IsNotNull(actualResult);
+            Assert.AreEqual(actualResult, mockListOfMessages);
         }
 
         [TestMethod]
-        [DataRow ("Alfa@testemail.com")]
-        public void GetListOfMessagesForOneUser_ReturnOk_ListIsNotNull(string email)
+        public void GetListOfMessagesForOneUser_ShouldReturnOk_WhenListIsNotNull()
         {
-            // ARANGE
-            var moq_ListOfMessages = new List<Message>
+            // ARRANGE
+            var messageServices = new Mock<IMessageServices>();
+            var mockListOfMessages = new List<Message>
             {
-                new Message{ MessageId = 101, MessageBody = "This is Message number one", ReceiverEmail = "Alfa@testemail.com"},
-                new Message{ MessageId = 102, MessageBody = "This is Message number two", ReceiverEmail = "Bravo@testemail.com"},
-                new Message{ MessageId = 103, MessageBody = "This is Message number three", ReceiverEmail = "Charlie@testemail.com"},
+                new Message{ MessageId = 101, MessageBody = "This is Message number one", ReceiverEmail = "Alfa@testemail.com"}, 
+                new Message{ MessageId = 102, MessageBody = "This is Message number two", ReceiverEmail = "Alfa@testemail.com"},
+                new Message{ MessageId = 103, MessageBody = "This is Message number three", ReceiverEmail = "Alfa@testemail.com"},
             };
 
-            var messageService = new Mock<IMessageServices>();
-
-            messageService.Setup(x => x.GetListOfMessagesForOneUser(email)).Returns(moq_ListOfMessages);
+            string email = "Alfa@testemail.com";
+            messageServices.Setup(x => x.GetListOfMessagesForOneUser(It.IsAny<string>())).Returns(mockListOfMessages);
 
             //// ACT
-            var inbox = messageService.Object.GetListOfMessagesForOneUser(email);
+            var userInbox = messageServices.Object.GetListOfMessagesForOneUser(email);
 
             //// ASSERT
-            Assert.IsNotNull(inbox);
+            Assert.AreEqual(userInbox, mockListOfMessages);
         }
 
         [TestMethod]
-        public void AddMessageToList_MessageIscreatedAndAdded_MessageIsInTheList()
+        public void DeleteMessages_ShouldDeleteAllMessages_WhenEmailIsNotNull()
         {
+            //ARRANGE
+            var listOfMessages = new Mock<List<IMessage>>();
 
+            var mockMessageServices = new Mock<IMessageServices>();
+            var email = "Alfa@testemail.com";
+
+            mockMessageServices.Setup(x => x.DeleteMessages(It.IsAny<string>()));
+
+            //ACT
+            mockMessageServices.Object.DeleteMessages(email);
+            listOfMessages.Object.Clear();
+
+            //// ASSERT
+            Assert.IsNotNull(email);
+            Assert.AreEqual(0, listOfMessages.Object.Count);
         }
 
-        [TestMethod]
-        [DataRow("Alfa@testemail.com")]
-        public void DeleteMessages_ReturnOk_ListIsNull(string email)
-        {
 
-        }
+
+        //*************NEEDS FIXING****************
+        //[TestMethod]
+        //public void AddMessageToList_ShouldAddMessageToList_WhenMessageIsNotEmpty()
+        //{
+        //    // ARRANGE
+
+            
+        //    var newMessage = new Message()
+        //    {
+        //        MessageBody = "First message",
+        //        SenderEmail = "sender@testemail.com",
+        //        ReceiverEmail = "alfa@testemail.com"
+        //    };
+        //    var mockListOfMessages = new List<IMessage>();
+
+        //    var messageServices = new Mock<IMessageServices>();
+        //    messageServices.Setup(x => x.AddMessageToList(newMessage));
+
+        //    mockListOfMessages = messageServices();
+
+        //    //// ACT
+        //    messageServices.Object.AddMessageToList(new Message());
+            
+        //    //// ASSERT
+        //    //Assert.IsNotNull(newMessage);
+        //    //Assert.IsNotNull(mockListOfMessages);
+        //    //Assert.AreEqual(newMessage, mockListOfMessages);
+        //}
     }
 }

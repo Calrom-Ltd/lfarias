@@ -59,7 +59,7 @@ namespace API_projTraining.Controllers
         public ActionResult<MessageServices> AddMessage([FromBody] Message message)
         {
             _messageServices.AddMessageToList(message);
-            return Ok("Messages added to the list.");
+            return Ok("Message added to the list.");
         }
     }
 }

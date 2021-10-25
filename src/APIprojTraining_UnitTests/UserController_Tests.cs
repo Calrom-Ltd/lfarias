@@ -3,6 +3,9 @@ using API_projTraining.Libraries;
 using API_projTraining.Services;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
+using System.Collections.Generic;
+using Microsoft.AspNetCore.Mvc;
+using System.Net;
 
 namespace APIprojTraining_UnitTests
 {
@@ -18,10 +21,20 @@ namespace APIprojTraining_UnitTests
 
         //-----Passing tests-----
         [TestMethod]
-        public void GetAllUser_ReturnOk_ListIsNotNull()
+        public void GetAllUser_ShouldReturnOk_WhenListIsCalled()
         {
-            var listWithAllUsers = _userServices.GetAllUsers();
-            Assert.IsNotNull(listWithAllUsers);
+            //ARRANGE
+            var userService = new Mock<IUserServices>();
+            userService.Setup(x => x.GetAllUsers()).Returns(new List<User>());
+            var userController = new UserController(userService.Object);
+
+            //ACT
+            var actionResult = userController.GetAllUsers();
+            var okActionResult = actionResult as OkObjectResult;
+
+            //ASSERT
+            Assert.IsNotNull(okActionResult);
+            Assert.AreEqual(200, okActionResult.StatusCode);
         }
 
         [TestMethod]
@@ -42,21 +55,25 @@ namespace APIprojTraining_UnitTests
 
 
         [TestMethod]
-        public void Login_ValidUser_ReturnsOk()
+        public void Login_WhenValidUserAndPassword_ShouldCallLoginMethod()
         {
-            //// ARANGE
+            //// ARRANGE
             var userService = new Mock<IUserServices>();
             var email = "asdfas";
             var passw = "123412";
-            userService.Setup(x => x.ValidateLogin(It.IsAny<string>(), It.IsAny<string>())).Returns(new User());
+            userService.Setup(x => x.ValidateLogin(It.IsAny<string>(), It.IsAny<string>()))
+                .Returns(new User());
 
             var userController = new UserController(userService.Object);
 
             //// ACT
+            
             var actionResult = userController.Login(email, passw);
+            var okActionResult = actionResult as OkObjectResult;
 
             //// ASSERT
-            Assert.IsNotNull(actionResult);
+            Assert.IsNotNull(okActionResult);
+            Assert.AreEqual(200, actionResult.Result);
         }
     }
 }

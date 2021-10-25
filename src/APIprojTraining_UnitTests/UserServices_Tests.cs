@@ -10,68 +10,78 @@ namespace APIprojTraining_UnitTests
     [TestClass]
     public class UserServices_Tests
     {
-        //---------------------------PASSING TESTS---------------------------//
+        public UserServices _userServices;
 
+        public UserServices_Tests()
+        {
+            _userServices = new UserServices();
+        }
+
+        //---------------------------PASSING TESTS---------------------------//
+        //OK
         [TestMethod]
-        public void GetAllUsers_ReturnList_ListIsNotNull()
+        public void GetAllUsers_ShouldReturnList_WhenListIsNotNull()
         {
             // ARANGE
-            var moq_ListOfUsers = new List<User>
+            var mock_ListOfUsers = new List<User>
             {
                 new User{ UserId = 01, Email = "Alfa@testemail.com"},
                 new User{ UserId = 02, Email = "Bravo@testemail.com"},
                 new User{ UserId = 03, Email = "Charlie@testemail.com"},
             };
 
-            var userService = new Mock<IUserServices>();
-            userService.Setup(x => x.GetAllUsers()).Returns(moq_ListOfUsers);
+            var mockUserService = new Mock<IUserServices>();
+            mockUserService.Setup(x => x.GetAllUsers()).Returns(mock_ListOfUsers);
 
             //// ACT
-            var actualResult = userService.Object.GetAllUsers();
+            var actualResult = mockUserService.Object.GetAllUsers();
 
             //// ASSERT
-            Assert.IsNotNull(actualResult);
+            Assert.AreEqual(actualResult, mock_ListOfUsers);
         }
 
         [TestMethod]
-        [DataRow(01)]
-        public void GetUserById_ReturnUser_ValidId(int id)
+        public void GetUserById_ShouldReturnUser_WhenIdIsValid()
         {
             //ARRANGE
-            var moq_ListOfUsers = new List<User>
+            var mockUser = new User
             {
-                new User{ UserId = 01, Email = "Alfa@testemail.com"},
-                new User{ UserId = 02, Email = "Bravo@testemail.com"},
-                new User{ UserId = 03, Email = "Charlie@testemail.com"},
+                UserId = 01,
+                Email = "Alfa@testemail.com",
+                FirstName = "Alfa",
+                LastName = "Arantes",
+                Password = "Alf49874"
             };
+            int id = 01;
+            var mockUserService = new Mock<IUserServices>();
+            mockUserService.Setup(x => x.GetUserById(It.IsAny<int>())).Returns(mockUser);
 
-            var userService = new Mock<IUserServices>();
-            userService.Setup(x => x.GetUserById(id)).Returns(new User());
-
-            //ACT
-            var userId = userService.Object.GetUserById(id);
+            //// ACT
+            var result = mockUserService.Object.GetUserById(id);
 
             //ASSERT
-            Assert.AreEqual(userId.UserId, id);
+            Assert.AreEqual(id, result.UserId);
         }
 
         [TestMethod]
-        [DataRow("Alfa@testemail.com")]
-        public void GetUserByEmail_ReturnUser_ValidEmail(string email)
+        public void GetUserByEmail_ShouldReturnUser_WhenEmailIsValid()
         {
             //ARRANGE
-            var moq_ListOfUsers = new List<User>
+            var mockUser = new User
             {
-                new User{ UserId = 01, Email = "Alfa@testemail.com"},
-                new User{ UserId = 02, Email = "Bravo@testemail.com"},
-                new User{ UserId = 03, Email = "Charlie@testemail.com"},
+                UserId = 01,
+                Email = "Alfa@testemail.com",
+                FirstName = "Alfa",
+                LastName = "Arantes",
+                Password = "Alf49874"
             };
+            var email = "Alfa@testemail.com";
 
-            var userService = new Mock<IUserServices>();
-            userService.Setup(x => x.GetUserByEmail(email)).Returns(new User());
+            var mockUserService = new Mock<IUserServices>();
+            mockUserService.Setup(x => x.GetUserByEmail(It.IsAny<string>())).Returns(mockUser);
 
             //ACT
-            var userEmail = userService.Object.GetUserByEmail(email);
+            var userEmail = mockUserService.Object.GetUserByEmail(email);
 
             //ASSERT
             Assert.AreEqual(userEmail.Email, email);
@@ -79,162 +89,154 @@ namespace APIprojTraining_UnitTests
 
 
         [TestMethod]
-        [DataRow("Alf49874")]
-        public void GetUserByPassword_ReturnOk_ValidPassword(string password)
+        public void GetUserByPassword_ShouldReturnOk_WhenPasswordIsValid()
         {
             //ARRANGE
-            var moq_ListOfUsers = new List<User>
+            var mockUser = new User
             {
-                new User{ UserId = 01, Password = "Alf49874"},
-                new User{ UserId = 02, Password = "Br4v09874"},
-                new User{ UserId = 03, Password = "Ch4rli39874"},
+                UserId = 01,
+                Email = "Alfa@testemail.com",
+                FirstName = "Alfa",
+                LastName = "Arantes",
+                Password = "Alf49874"
             };
+            var password = "Alf49874";
 
-            var userService = new Mock<IUserServices>();
-            userService.Setup(x => x.GetUserByPassword(password)).Returns(new User());
-
+            var mockUserService = new Mock<IUserServices>();
+            mockUserService.Setup(x => x.GetUserByPassword(It.IsAny<string>())).Returns(mockUser);
+            
             //ACT
-            var userPassword = userService.Object.GetUserByPassword(password);
+            var userPassword = mockUserService.Object.GetUserByPassword(password);
 
             //ASSERT
             Assert.AreEqual(userPassword.Password, password);
         }
 
+        [TestMethod]
+        public void ValidateLogin_ShouldReturnUserEmailAndPassword_WhenTheyMatchDb()
+        {
+            //ARRANGE
+            var mockUser = new User
+            {
+                UserId = 01,
+                Email = "Alfa@testemail.com",
+                FirstName = "Alfa",
+                LastName = "Arantes",
+                Password = "Alf49874"
+            };
+            var email = "Alfa@testemail.com";
+            var password = "Alf49874";
 
-        // NEEDS REVIEWING ABOUT NOT GETTING THE PARAMETIZED USER/PW FROM THE LIST.
+            var mockUserService = new Mock<IUserServices>();
+            mockUserService.Setup(x => x.ValidateLogin(It.IsAny<string>(), It.IsAny<string>())).Returns(mockUser);
 
-        //[TestMethod]
-        //[DataRow("Alfa@testemail.com", "Alf49874")]
-        //public void ValidateLogin_ReturnUserEmailAndPassword_MatchDbInfo(string email, string password)
-        //{
-        //    //ARRANGE
-        //    var moq_ListOfUsers = new List<User>
-        //    {
-        //        new User{ Email = "Alfa@testemail.com", Password = "Alf49874"},
-        //        new User{ Email = "Bravo@testemail.com", Password = "Br4v09874"},
-        //        new User{ Email = "Charlie@testemail.com", Password = "Ch4rl13"},
-        //    };
+            //ACT
+            var userLogin = mockUserService.Object.ValidateLogin(email, password);
 
-        //    var userService = new Mock<IUserServices>();
-        //    userService.Setup(x => x.ValidateLogin(It.IsAny<string>, It.IsAny<string>)).Returns(new User());
+            //ASSERT
+            Assert.AreEqual(userLogin.Email, email);
+            Assert.AreEqual(userLogin.Password, password);
+        }
 
-        //    //ACT
-        //    var userLogin = userService.Object.ValidateLogin(email, password);
-
-        //    //ASSERT
-        //    Assert.AreEqual(userLogin.Email, email, userLogin.Password, password);
-        //    //Assert.AreEqual(
-        //}
 
         //---------------------------FAILING TESTS---------------------------//
 
         [TestMethod]
-        public void GetAllUsers_ReturnList_ListIsNull()
+        public void GetAllUsers_ShouldNotReturnList_WhenListIsEmpty()
         {
             // ARANGE
-            var moq_ListOfUsers = new List<User>
-            {
-                new User{ UserId = 01, Email = "Alfa@testemail.com"},
-                new User{ UserId = 02, Email = "Bravo@testemail.com"},
-                new User{ UserId = 03, Email = "Charlie@testemail.com"},
-            };
-
             var userService = new Mock<IUserServices>();
-            //the list is not returned to the userService object, thus the actualResult variable is empty
-            userService.Setup(x => x.GetAllUsers());
+            
+            ////the list is not being returned to the userService.Object, thus the *actualResult* variable is null
+            userService.Setup(x => x.GetAllUsers()).Returns(new List<User>());
 
             //// ACT
             var actualResult = userService.Object.GetAllUsers();
 
             //// ASSERT
-            Assert.IsNull(actualResult);
+            Assert.AreEqual(0, actualResult.Count);
         }
 
         [TestMethod]
-        [DataRow(02)]
-        public void GetUserById_ReturnUser_InvalidId(int id)
+        public void GetUserById_ShouldNotReturnUser_WhenIdIsInvalid()
         {
             //ARRANGE
-            var moq_ListOfUsers = new List<User>
+            var mockUser = new User
             {
-                new User{ UserId = 01, Email = "Alfa@testemail.com"},
-                new User{ UserId = 02, Email = "Bravo@testemail.com"},
-                new User{ UserId = 03, Email = "Charlie@testemail.com"},
+                UserId = 01,
+                Email = "Alfa@testemail.com",
+                FirstName = "Alfa",
+                LastName = "Arantes",
+                Password = "Alf49874"
             };
+            int id = 015;            
 
-            var userService = new Mock<IUserServices>();
-            userService.Setup(x => x.GetUserById(id)).Returns(new User());
+            var mockUserService = new Mock<IUserServices>();
+            mockUserService.Setup(x => x.GetUserById(It.IsAny<int>())).Returns(mockUser);
 
             //ACT
-            var userId = userService.Object.GetUserById(id);
+            var userId = mockUserService.Object.GetUserById(id);
 
             //ASSERT
-            Assert.AreNotEqual(userId.UserId, id);
+            Assert.AreNotEqual(userId.UserId, id);            
         }
 
         [TestMethod]
-        [DataRow("Delta@testemail.com")]
-        public void GetUserByEmail_ReturnUser_InvalidEmail(string email)
+        public void GetUserByEmail_ShouldNotReturnUser_WhenEmailIsInvalid()
         {
-            //ARRANGE
-            var moq_ListOfUsers = new List<User>
-            {
-                new User{ UserId = 01, Email = "Alfa@testemail.com"},
-                new User{ UserId = 02, Email = "Bravo@testemail.com"},
-                new User{ UserId = 03, Email = "Charlie@testemail.com"},
-            };
+            //ARRANGE            
+            string email = "zebra@testemail.com";
 
-            var userService = new Mock<IUserServices>();
-            userService.Setup(x => x.GetUserByEmail(email)).Returns(new User());
+            var mockUserService = new Mock<IUserServices>();
+            mockUserService.Setup(x => x.GetUserByEmail(It.IsAny<string>())).Returns(new User());
 
             //ACT
-            var userEmail = userService.Object.GetUserByEmail(email);
+            var userEmail = mockUserService.Object.GetUserByEmail(email);
 
             //ASSERT
-            Assert.AreNotEqual(userEmail.Email, email);
+            Assert.IsNull(userEmail.Email);
         }
 
         [TestMethod]
-        [DataRow("D3lt4")]
-        public void GetUserByPassword_ReturnOk_InvalidPassword(string password)
+        public void GetUserByPassword_ShouldNotReturnUser_WhenPasswordIsInvalid()
         {
             //ARRANGE
-            var moq_ListOfUsers = new List<User>
+            var mockUser = new User
             {
-                new User{ UserId = 01, Email = "Alfa@testemail.com", Password = "Alf49874"},
-                new User{ UserId = 02, Email = "Bravo@testemail.com", Password = "Br4v09874"},
-                new User{ UserId = 03, Email = "Charlie@testemail.com", Password = "Ch4rl13"},
+                UserId = 01,
+                Email = "Alfa@testemail.com",
+                FirstName = "Alfa",
+                LastName = "Arantes",
+                Password = "Alf49874"
             };
+            string password = "Z3br49874";
 
-            var userService = new Mock<IUserServices>();
-            userService.Setup(x => x.GetUserByPassword(password)).Returns(new User());
+            var mockUserService = new Mock<IUserServices>();
+            mockUserService.Setup(x => x.GetUserByPassword(It.IsAny<string>())).Returns(mockUser);
 
             //ACT
-            var userPassword = userService.Object.GetUserByPassword(password);
+            var userPassword = mockUserService.Object.GetUserByPassword(password);
 
             //ASSERT
             Assert.AreNotEqual(userPassword.Password, password);
         }
 
         [TestMethod]
-        [DataRow("Delta@testemail.com", "D3lt49874")]
-        public void ValidateLogin_ReturnNothing_EmailAndPasswordAreInvalid(string email, string password)
+        public void ValidateLogin_ShouldNotReturnUser_WhenBothEmailAndPasswordAreInvalid()
         {
-            var moq_ListOfUsers = new List<User>
-            {
-                new User{ UserId = 01, Email = "Alfa@testemail.com", Password = "Alf49874"},
-                new User{ UserId = 02, Email = "Bravo@testemail.com", Password = "Br4v09874"},
-                new User{ UserId = 03, Email = "Charlie@testemail.com", Password = "Ch4rl13"},
-            };
+            //ARRANGE
+            var mockUserService = new Mock<IUserServices>();
+            string email = "Zebra@testemail.com";
+            string password = "Z3br49874";
+            mockUserService.Setup(x => x.ValidateLogin(It.IsAny<string>(), It.IsAny<string>()))
+                .Returns(new User());
 
-            var userService = new Mock<IUserServices>();
-            userService.Setup(x => x.ValidateLogin(email, password)).Returns(new User());
-            
             //ACT
-            var userLogin = userService.Object.ValidateLogin(email, password);
+            var userLogin = mockUserService.Object.ValidateLogin(email, password);
 
             //ASSERT
-            Assert.AreNotEqual(userLogin.Email, email, userLogin.Password, password);
+            Assert.IsNull(userLogin.Email);
+            Assert.IsNull(userLogin.Password);
         }
     }
 }

@@ -26,9 +26,7 @@ namespace API_projTraining.Services
 
         public List<Message> GetListOfMessagesForOneUser(string email)
         {
-            List<Message> inbox = new();
-            inbox = listOfMessages.FindAll(p => p.ReceiverEmail == email);
-
+            var inbox = listOfMessages.FindAll(p => p.ReceiverEmail == email);
             return inbox;
         }
 
@@ -41,6 +39,7 @@ namespace API_projTraining.Services
         {
             var _message = new Message()
             {
+                MessageId = message.MessageId,
                 MessageTitle = message.MessageTitle,
                 MessageBody = message.MessageBody,
                 SenderEmail = message.SenderEmail,
